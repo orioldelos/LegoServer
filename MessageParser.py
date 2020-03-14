@@ -29,7 +29,7 @@ class MessageParser():
         threading.Thread.__init__(self)
 
     def ProcessMessage(self, client, userdata, msg):
-        logging.info("Message received from broker:" +msg.payload.decode())
+        #logging.info("Message received from broker:" +msg.payload.decode())
         Switch = {'robot/sonar': self.PutInSonarQueue, "robot/odo": self.PutInOdometryQueue}
         payloadasobject = ast.literal_eval(msg.payload.decode())
         Switch[msg.topic](payloadasobject)

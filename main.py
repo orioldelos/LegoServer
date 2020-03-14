@@ -7,9 +7,11 @@ import queue
 #from ComunicationServer import ComunicationServer
 from RadarPlot import RadarPlot
 from MessageParser import MessageParser
+import DriveCommander
 
 DataQueue = queue.Queue()
-
+Commander = DriveCommander.DriveCommander()
+Commander.start()
 Parser = MessageParser(DataQueue)
 #Parser.start()
 Parser.run()
@@ -19,3 +21,5 @@ Parser.run()
 
 Radar = RadarPlot(Parser.GetSonarQueue())
 Radar.Start()
+
+
