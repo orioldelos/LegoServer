@@ -2,14 +2,14 @@
 import socket
 import sys
 import logging
-import queue
+import queue as Queue
 
 #from ComunicationServer import ComunicationServer
 from RadarPlot import RadarPlot
 from MessageParser import MessageParser
 import DriveCommander
 
-DataQueue = queue.Queue()
+DataQueue = Queue.Queue()
 Commander = DriveCommander.DriveCommander()
 Commander.start()
 Parser = MessageParser(DataQueue)

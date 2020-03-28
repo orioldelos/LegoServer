@@ -1,6 +1,6 @@
 import threading
 import logging
-import queue 
+import queue as Queue
 import paho.mqtt.client as MQTT
 import time
 import ast
@@ -10,8 +10,8 @@ logging.basicConfig( level=logging.INFO,
 
 #class MessageParser(threading.Thread):
 class MessageParser():
-    sonarsensorQ = queue.Queue()
-    odometryQ = queue.Queue()
+    sonarsensorQ = Queue.Queue()
+    odometryQ = Queue.Queue()
     TimeToStop = False
 
     def __init__(self,messageQueue):
@@ -19,14 +19,14 @@ class MessageParser():
         
         self.messageQ = messageQueue
 
-        self.client = MQTT.Client(transport="tcp")
+        self.client = MQTT.Client("ServerParser",transport="tcp")
         self.client.on_connect = self.on_connect
         self.client.on_subscribe = self.on_subscribe
         self.client.on_message = self.ProcessMessage
         self.client.on_disconnect = self.on_disconnect
         self.client.connect("192.168.59.76", 1883)
 
-        threading.Thread.__init__(self)
+        #threading.Thread.__init__(self)
 
     def ProcessMessage(self, client, userdata, msg):
         #logging.info("Message received from broker:" +msg.payload.decode())
@@ -44,7 +44,6 @@ class MessageParser():
             #self.client.loop_forever()
             self.client.loop_start()
         #self.client.loop_stop()
-
  
     def on_subscribe(self, client, userdata, mid, granted_qos):
         logging.info("Subscription :" +str(mid)+" "+str(granted_qos))
